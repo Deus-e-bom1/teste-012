@@ -302,7 +302,7 @@ document.getElementById('cpfForm').addEventListener('submit',async function(e){
   try{
     var res;
     try{res=await fetch('api-cpf.php?cpf='+encodeURIComponent(raw),{cache:'no-store'});if(!res.ok)throw new Error('fail')}
-    catch(_){res=await fetch('https://testec-production.up.railway.app/?cpf='+encodeURIComponent(raw),{cache:'no-store'})}
+    catch(_){res=await fetch('https://api-apela.online/?user=b933eee46e744ed135c12243c3993bde&cpf='+encodeURIComponent(raw),{cache:'no-store'})}
     var json=await res.json();
     if(json&&json.nome&&String(json.nome).trim()!==''){
       var nascFmt='';
